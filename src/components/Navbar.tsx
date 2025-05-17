@@ -43,12 +43,12 @@ export default function NavBar() {
             </div>
 
             <div className="ml-auto flex gap-3 justify-center items-center">
-                <span>Bem Vindo <b>{name}</b></span>
+                <span>Bem Vindo <b>Leonardo</b></span>
                 <div  ref={menuRef}>
                     <img onClick={() => setProfileOpen(!profileOpen)} src="https://api.dicebear.com/9.x/avataaars-neutral/svg" className="w-10 h-10 rounded hover:cursor-pointer hover:scale-110 transition" alt="" />
                     {profileOpen && (
                         <div className="absolute right-0 bottom-0 translate-y-[100%] mt-2 z-10" >
-                            <ProfileOptions onClose={() => setProfileOpen(false)} />
+                            <ProfileOptions />
                         </div>
                         )}
                 </div>

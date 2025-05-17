@@ -2,11 +2,7 @@ import { useNavigate } from "react-router-dom";
 import ProfileRow from "./ProfileRow";
 import { ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline";
 
-type Props = {
-    onClose: () => void;
-}
-
-export default function ProfileOptions({ onClose }: Props) {
+export default function ProfileOptions() {
 
     const navigate = useNavigate();
 
