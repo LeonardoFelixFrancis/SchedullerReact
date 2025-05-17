@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DayColumn from "../components/DayColumn";
 import CreateScheduleModal from "../components/CreateScheduleModal";
-import NavBar from "../components/Navbar";
-
-const WeekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Saturday', 'Sunday'];
+import { useDateStore } from "@/store/useDataStore";
+import { formatDate, getAllDaysOfWeek } from "@/utils/date_utils";
+import type WeekDay from "@/models/date";
 
 type Schedule = {
     title: string;
@@ -17,6 +17,12 @@ type ScheduleMap = {
 export default function Home() {
     const [schedules, setSchedules] = useState<ScheduleMap>({});
     const [modalOpenForDay, setModalOpenForDay] = useState<string | null>(null);
+    const [weekDays, setWeekDays] = useState<WeekDay[]>();
+    const currDate = useDateStore(state => state.selectedDate);
+
+    useEffect(() => {
+        setWeekDays(getAllDaysOfWeek(currDate));
+    }, [currDate])
 
     const handleAddSchedule = (day: string, newSchedule: Schedule) => {
         setSchedules((prev) => ({
@@ -35,17 +41,16 @@ export default function Home() {
     };
 
     return (
-        <div className="min-h-screen p-1 bg-gray-100 flex flex-col">
-            <NavBar />
-
+        <>
             <div className="flex flex-1 overflow-x-auto gap-4">
-                {WeekDays.map((day => (
+                {weekDays?.map((day => (
                     <DayColumn
-                        key={day}
+                        key={day.date}
                         day={day}
-                        schedules={schedules[day] || []}
-                        onOpenModal={() => setModalOpenForDay(day)}
-                        onRemoveSchedule={(index) => handleRemoveSchedule(day, index)}
+                        highlight={formatDate(currDate) == day.date}
+                        schedules={schedules[day.weekday] || []}
+                        onOpenModal={() => setModalOpenForDay(day.weekday)}
+                        onRemoveSchedule={(index) => handleRemoveSchedule(day.weekday, index)}
                     />
                 )))}
             </div>
@@ -57,7 +62,6 @@ export default function Home() {
                     onSubmit={(data) => handleAddSchedule(modalOpenForDay, data)}
                 />
             )}
-
-        </div>
+        </>
     );
 }

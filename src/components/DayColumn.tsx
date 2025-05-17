@@ -1,16 +1,22 @@
 import ScheduleCard from "./ScheduleCard";
+import type WeekDay from "@/models/date";
 
 type Props = {
-  day: string;
+  day: WeekDay;
+  highlight: boolean;
   schedules: { title: string, time: string }[];
   onOpenModal: () => void;
   onRemoveSchedule: (index: number) => void;
 }
 
-export default function DayColumn({ day, schedules, onOpenModal, onRemoveSchedule }: Props) {
+export default function DayColumn({ day, highlight, schedules, onOpenModal, onRemoveSchedule }: Props) {
+
   return (
-    <div className="relative flex-1 min-w-[200px] border border-gray-300 bg-secondary rounded p-3 flex flex-col">
-      <h2 className="text-center font-bold text-sm mb-4">{day}</h2>
+    <div className={`relative flex-1 min-w-[200px]  rounded p-3 flex flex-col ${ highlight ? 'border-gray-600 border-4 bg-gray-200' : 'border-gray-300  border bg-secondary' }`}>
+      <div className="text-center font-bold text-sm mb-4 flex flex-col gap-1"> 
+        <span className="text-[1.2rem]" >{day.date}</span> 
+        <span className="text-[0.7rem] text-gray-700">{day.weekday}</span>
+      </div>
 
       <div className="flex-1 overflow-y-auto">
         {schedules.map((sched, i) => (
@@ -26,7 +32,7 @@ export default function DayColumn({ day, schedules, onOpenModal, onRemoveSchedul
       <button 
         onClick={onOpenModal}
         className="absolute bottom-3 right-3 bg-gray-700 text-white rounded-full w-8 h-8 flex items-center justify-center shadow hover:bg-gray-900 hover:cursor-pointer border hover:scale-110 transition"
-        title={`Add Schedule to ${day}`}
+        title={`Add Schedule to ${day.date}`}
       >
         +
       </button>
