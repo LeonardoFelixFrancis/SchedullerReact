@@ -70,7 +70,7 @@ export default function NavBar({ changeCurrDate }: Props) {
             </div>
 
             <div className="ml-auto flex gap-3 justify-center items-center">
-                <span>Bem Vindo <b>Leonardo</b></span>
+                <span className="xsm:block hidden">Bem Vindo <b>Leonardo</b></span>
                 <div  ref={menuRef}>
                     <img onClick={() => setProfileOpen(!profileOpen)} src="https://avatar.iran.liara.run/username?username=leonardo+felix" className="w-10 h-10 rounded hover:cursor-pointer hover:scale-110 transition" alt="" />
                     {profileOpen && (
