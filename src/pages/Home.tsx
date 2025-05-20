@@ -17,8 +17,13 @@ type ScheduleMap = {
 export default function Home() {
     const [schedules, setSchedules] = useState<ScheduleMap>({});
     const [modalOpenForDay, setModalOpenForDay] = useState<string | null>(null);
+    const [createScheduleModalOpen, setCreateScheduleModalOpen] = useState<boolean>(false);
     const [weekDays, setWeekDays] = useState<WeekDay[]>();
     const currDate = useDateStore(state => state.selectedDate);
+
+    const openOrCloseScheduleCreateModal = (value: boolean) => {
+        setCreateScheduleModalOpen(value);
+    }
 
     useEffect(() => {
         setWeekDays(getAllDaysOfWeek(currDate));
@@ -29,7 +34,7 @@ export default function Home() {
             ...prev,
             [day]: [...(prev[day] || []), newSchedule],
         }));
-        setModalOpenForDay(null);
+        setCreateScheduleModalOpen(true);
     };
 
     const handleRemoveSchedule = (day: string, index: number) => {
@@ -49,19 +54,20 @@ export default function Home() {
                         day={day}
                         highlight={formatDate(currDate) == day.date}
                         schedules={schedules[day.weekday] || []}
-                        onOpenModal={() => setModalOpenForDay(day.weekday)}
+                        onOpenModal={() => setCreateScheduleModalOpen(true)}
                         onRemoveSchedule={(index) => handleRemoveSchedule(day.weekday, index)}
                     />
                 )))}
             </div>
 
-            {modalOpenForDay && (
-                <CreateScheduleModal
-                    day={modalOpenForDay}
-                    onClose={() => setModalOpenForDay(null)}
-                    onSubmit={(data) => handleAddSchedule(modalOpenForDay, data)}
-                />
-            )}
+
+            <CreateScheduleModal
+                day={modalOpenForDay}
+                open={createScheduleModalOpen}
+                setOpen={openOrCloseScheduleCreateModal}
+                onSubmit={(data) => handleAddSchedule(modalOpenForDay, data)}
+            />
+
         </>
     );
 }

@@ -20,11 +20,14 @@ export default function TeachersModal({ open, setOpen }: Props) {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm<TeacherCreateFormData>();
 
     const onSubmit = (data: TeacherCreateFormData) => {
         console.log(data);
+        reset();
+        setOpen(false);
     }
 
     return (
@@ -49,7 +52,7 @@ export default function TeachersModal({ open, setOpen }: Props) {
                     error={errors.email?.message}
                     />
                     
-                    <Button type="submit">Criar</Button>
+                    <Button type="submit" className="mt-3">Criar</Button>
 
                 </form>
 
