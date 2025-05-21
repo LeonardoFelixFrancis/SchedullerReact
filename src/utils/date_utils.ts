@@ -56,3 +56,25 @@ export function parseDate(dateStr: string): Date {
   const [day, month, year] = dateStr.split('-').map(Number);
   return new Date(year, month - 1, day);
 }
+
+export function getClassHours(start: string, end:string, interval: number): string[] {
+    const result = [];
+    const [startHour, startMinute] = start.split(":").map(Number);
+    const [endHour, endMinute] = end.split(":").map(Number);
+
+    const startDate = new Date();
+    startDate.setHours(startHour, startMinute, 0, 0);
+
+    const endDate = new Date();
+    endDate.setHours(endHour, endMinute, 0, 0);
+
+    while (startDate <= endDate) {
+        const hour = String(startDate.getHours()).padStart(2, "0");
+        const minutes = String(startDate.getMinutes()).padStart(2, "0");
+        result.push(`${hour}:${minutes}`);
+
+        startDate.setMinutes(startDate.getMinutes() + interval);
+    }
+
+    return result;
+}

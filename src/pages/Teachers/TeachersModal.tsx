@@ -1,7 +1,6 @@
-import Modal from "./Modal"
+import Modal from "../../components/Modal"
 import { useForm } from "react-hook-form"
-import Input from "./Input"
-import Button from "./Button"
+import Input from "../../components/Input"
 
 type Props = {
     open: boolean;
@@ -9,10 +8,8 @@ type Props = {
 }
 
 type TeacherCreateFormData = {
-    username: string;
     name: string;
     email: string;
-    password: string;
 }
 
 export default function TeachersModal({ open, setOpen }: Props) {
@@ -52,7 +49,14 @@ export default function TeachersModal({ open, setOpen }: Props) {
                     error={errors.email?.message}
                     />
                     
-                    <Button type="submit" className="mt-3">Criar</Button>
+                    <div className='flex justify-end gap-2 pt-2'>
+                        <button type='button' onClick={() => setOpen(false)} className='text-gray-600 hover:underline hover:cursor-pointer'>
+                        Cancelar
+                        </button>
+                        <button type='submit' className='bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 hover:cursor-pointer'>
+                        Criar
+                        </button>
+                    </div>
 
                 </form>
 

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import DayColumn from "../components/DayColumn";
-import CreateScheduleModal from "../components/CreateScheduleModal";
+import DayColumn from "./Home/DayColumn";
 import { useDateStore } from "@/store/useDataStore";
 import { formatDate, getAllDaysOfWeek } from "@/utils/date_utils";
 import type WeekDay from "@/models/date";
@@ -16,26 +15,12 @@ type ScheduleMap = {
 
 export default function Home() {
     const [schedules, setSchedules] = useState<ScheduleMap>({});
-    const [modalOpenForDay, setModalOpenForDay] = useState<string | null>(null);
-    const [createScheduleModalOpen, setCreateScheduleModalOpen] = useState<boolean>(false);
     const [weekDays, setWeekDays] = useState<WeekDay[]>();
     const currDate = useDateStore(state => state.selectedDate);
-
-    const openOrCloseScheduleCreateModal = (value: boolean) => {
-        setCreateScheduleModalOpen(value);
-    }
 
     useEffect(() => {
         setWeekDays(getAllDaysOfWeek(currDate));
     }, [currDate])
-
-    const handleAddSchedule = (day: string, newSchedule: Schedule) => {
-        setSchedules((prev) => ({
-            ...prev,
-            [day]: [...(prev[day] || []), newSchedule],
-        }));
-        setCreateScheduleModalOpen(true);
-    };
 
     const handleRemoveSchedule = (day: string, index: number) => {
         setSchedules((prev) => {
@@ -59,14 +44,6 @@ export default function Home() {
                     />
                 )))}
             </div>
-
-
-            <CreateScheduleModal
-                day={modalOpenForDay}
-                open={createScheduleModalOpen}
-                setOpen={openOrCloseScheduleCreateModal}
-                onSubmit={(data) => handleAddSchedule(modalOpenForDay, data)}
-            />
 
         </>
     );

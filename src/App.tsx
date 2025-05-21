@@ -1,11 +1,12 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
-import Login from './pages/Login'
+import Login from './pages/Home/Login'
 import Register from './pages/Register'
 import './App.css'
 import { useState } from 'react'
 import NavBar from './components/Navbar'
-import Teachers from './pages/Teachers'
+import Teachers from './pages/Teachers/Teachers'
+import Lessons from './pages/Lessons/Lessons'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <Route path='/home' element={<Home />} />
         <Route path='/register' element={<Register />} />
         <Route path='/teachers' element={<Teachers />} />
+        <Route path='/lessons' element={<Lessons />} />
       </Routes>
     </div>
   )

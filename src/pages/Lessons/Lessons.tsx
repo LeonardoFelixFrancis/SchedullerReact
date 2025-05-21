@@ -1,15 +1,14 @@
-import TeachersTable from "@/components/TeachersTable";
 import { useForm } from "react-hook-form";
-import TeachersModal from "@/components/TeachersModal";
-import Modal from "@/components/Modal";
 import { useState } from "react";
+import LessonsTable from "./LessonsTable";
+import LessonsModal from "./LessonsModal";
 
 type TeacherFilterFormData = {
   name: string;
-  email: string;
+  subject: string;
 };
 
-export default function Teachers() {
+export default function Lessons() {
   const [open, setOpen] = useState(false);
 
   const openOrCloseTeachersModal = (value: boolean) => {
@@ -27,9 +26,9 @@ export default function Teachers() {
       <div className="flex flex-col">
         <div className="flex p-3 justify-end items-end">
             <button onClick={() => setOpen(true)} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white py-2 px-4 rounded">
-                Criar novo professor
+                Criar nova turma
             </button>
-            <TeachersModal open={open} setOpen={openOrCloseTeachersModal}/>
+            <LessonsModal open={open} setOpen={openOrCloseTeachersModal}/>
         </div>
         <div className="flex p-3 bg-white rounded">
           <form
@@ -38,7 +37,7 @@ export default function Teachers() {
           >
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-700">
-                Nome
+                Nome da turma
               </label>
               <input
                 className="mt-1 block w-full px-4 py-2 border rounded"
@@ -47,11 +46,11 @@ export default function Teachers() {
             </div>
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-700">
-                E-mail
+                Assunto
               </label>
               <input
                 className="mt-1 block w-full px-4 py-2 border rounded"
-                {...register("email")}
+                {...register("subject")}
               />
             </div>
 
@@ -63,7 +62,7 @@ export default function Teachers() {
       </div>
 
       <div className="flex-1 flex flex-col p-0 box-border rounded">
-        <TeachersTable></TeachersTable>
+        <LessonsTable></LessonsTable>
       </div>
     </div>
   );

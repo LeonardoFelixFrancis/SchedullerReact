@@ -1,6 +1,6 @@
 import { useState, useRef } from "react"
 import ProfileOptions from "./ProfileOptions";
-import { CalendarIcon, UserIcon, HomeIcon } from "@heroicons/react/24/outline";
+import { CalendarIcon, UserIcon, HomeIcon, BookOpenIcon } from "@heroicons/react/24/outline";
 import { Calendar } from "./ui/calendar";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -49,6 +49,11 @@ export default function NavBar({ changeCurrDate }: Props) {
 
                 <div>
                     <UserIcon onClick={() => navigate('/teachers')} title="Gerenciar professores" className="h-10 w-10 hover:cursor-pointer hover:scale-110 transition" />
+                </div>
+
+                
+                <div>
+                    <BookOpenIcon onClick={() => navigate('/lessons')} title="Gerenciar professores" className="h-10 w-10 hover:cursor-pointer hover:scale-110 transition" />
                 </div>
 
                 { '/home' == location.pathname &&

@@ -16,7 +16,7 @@ export default function Input({
 }: TextInputProps) {
     return (
         <div className="w-full">
-            <label htmlFor={name} className="block text-sm font-medium text-gray-700">
+            <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-1">
                 {label}
             </label>
             <input 

@@ -1,16 +1,21 @@
 import { useState, useEffect, useRef } from "react";
 
+type Item = {
+  value: string | number;
+  description: string;
+};
+
 type Props = {
   name: string;
   value: string | number;
   onChange: (value: string | number) => void;
-  items: string[];
+  items: Item[];
   placeholder: string;
   label: string;
   error?: string;
 };
 
-export function Select({
+export function ObjectSelect({
   name,
   value,
   onChange,
@@ -21,6 +26,7 @@ export function Select({
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const selected = items.find((item) => String(item.value) === String(value)) || null;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -52,7 +58,7 @@ export function Select({
           }`}
         >
           <span>
-            {value ? value : (
+            {selected ? selected.description : (
               <span className="text-gray-400">{placeholder}</span>
             )}
           </span>
@@ -73,17 +79,17 @@ export function Select({
           <ul className="absolute z-10 mt-1 w-full bg-white border rounded shadow max-h-60 overflow-auto">
             {items.map((item) => (
               <li
-                key={item}
+                key={item.value}
                 onClick={(event) => {
                   event.stopPropagation();
-                  onChange(item);
+                  onChange(item.value);
                   setIsOpen(false);
                 }}
                 className={`px-3 py-2 hover:bg-blue-500 hover:text-white cursor-pointer ${
-                  value === item ? "bg-blue-100" : ""
+                  value === item.value ? "bg-blue-100" : ""
                 }`}
               >
-                {item}
+                {item.description}
               </li>
             ))}
           </ul>
