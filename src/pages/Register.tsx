@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '@/hooks/useAuth';
 
 type RegisterFormData = {
     username: string;
@@ -11,6 +12,9 @@ type RegisterFormData = {
 }
 
 export default function Register() {
+
+    const { userRegister } = useAuth();
+
     const {
         register,
         handleSubmit,
@@ -20,12 +24,15 @@ export default function Register() {
         mode: 'onSubmit'
     })
 
-    const navigate = useNavigate();
     const password = watch('password');
 
     const onSubmit = (data: RegisterFormData) => {
-        console.log('data', data);
-        navigate('/');
+        userRegister({username: data.username,
+                    email: data.email,
+                    password: data.password,
+                    name: data.name,
+                    company_name: data.company_name
+        })
     }
 
     return (

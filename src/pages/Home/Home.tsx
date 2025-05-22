@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import DayColumn from "./Home/DayColumn";
+import DayColumn from "./DayColumn";
 import { useDateStore } from "@/store/useDataStore";
 import { formatDate, getAllDaysOfWeek } from "@/utils/date_utils";
 import type WeekDay from "@/models/date";

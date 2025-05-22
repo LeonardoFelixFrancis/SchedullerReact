@@ -1,17 +1,27 @@
 import api from "./api";
+import type {LessonData, LessonFilter} from "@/models/lesson";
 
-const createLesson = async (data) => {
+export const createLessonService = async (data: LessonData) => {
     const response = await api.post('/lesson', data)
     return response.data;
 }
 
-const listLessons = async (filters) => {
-    const response = await api.get('/lesson', {params: {
-        id: filters.id,
-        lesson_name: filters.lesson_name,
-        lesson_subject: filters.lesson_subject
-    }})
-
+export const listLessonsService = async (filters: LessonFilter) => {
+    const response = await api.get('/lesson', {params: {...filters}})
     return response.data;
 }
 
+export const getLessonService = async (lesson_id: number) => {
+    const response = await api.get(`/lesson/${lesson_id}`);
+    return response.data;
+}
+
+export const deleteLessonService = async (lesson_id: number) => {
+    const response = await api.delete(`/lesson/${lesson_id}`);
+    return response.data;
+}
+
+export const updateLessonService = async (data: LessonData) => {
+    const response = await api.put('/lessno', data);
+    return response.data;
+}

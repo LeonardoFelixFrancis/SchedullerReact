@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '@/hooks/useAuth';
 
 type LoginFormData = {
     email: string;
@@ -7,6 +8,8 @@ type LoginFormData = {
 }
 
 export default function Login() {
+    const { login }  = useAuth();
+
     const {
         register,
         handleSubmit,
@@ -19,11 +22,7 @@ export default function Login() {
 
     const onSubmit = (data: LoginFormData) => {
         const { email, password } = data;
-        if (email == 'admin@example.com' && password == '123456') {
-            navigate('/home');
-        } else {
-            alert('Invalid Credentials');
-        }
+        login({email, password});
     }
 
     return (

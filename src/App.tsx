@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
-import Home from './pages/Home'
-import Login from './pages/Home/Login'
+import Home from './pages/Home/Home'
+import Login from './pages/Login'
 import Register from './pages/Register'
 import './App.css'
 import { useState } from 'react'
