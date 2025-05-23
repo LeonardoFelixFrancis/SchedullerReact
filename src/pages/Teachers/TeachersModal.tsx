@@ -1,6 +1,7 @@
 import Modal from "../../components/Modal"
 import { useForm } from "react-hook-form"
 import Input from "../../components/Input"
+import useUser from "@/hooks/useUser"
 
 type Props = {
     open: boolean;
@@ -14,6 +15,8 @@ type TeacherCreateFormData = {
 
 export default function TeachersModal({ open, setOpen }: Props) {
 
+    const { userCreate } = useUser();
+
     const {
         register,
         handleSubmit,
@@ -22,7 +25,7 @@ export default function TeachersModal({ open, setOpen }: Props) {
     } = useForm<TeacherCreateFormData>();
 
     const onSubmit = (data: TeacherCreateFormData) => {
-        console.log(data);
+        userCreate({email: data.email, name: data.name, username: data.name});
         reset();
         setOpen(false);
     }

@@ -1,4 +1,5 @@
 export interface UserData {
+    id?: number;
     username: string;
     name: string;
     email: string;
@@ -9,5 +10,4 @@ export interface UserFilter {
     username?: string | null;
     email?: string | null;
     name?: string | null;
-    company_id: number | null;
 }

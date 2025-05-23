@@ -1,7 +1,8 @@
 import TeachersTable from "@/pages/Teachers/TeachersTable";
 import { useForm } from "react-hook-form";
 import TeachersModal from "@/pages/Teachers/TeachersModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import useUser from "@/hooks/useUser";
 
 type TeacherFilterFormData = {
   name: string;
@@ -10,9 +11,14 @@ type TeacherFilterFormData = {
 
 export default function Teachers() {
   const [open, setOpen] = useState(false);
+  const {users, userList} = useUser();
+
+    useEffect(() => {
+      userList({});
+    }, [userList]);
 
   const openOrCloseTeachersModal = (value: boolean) => {
-    setOpen(value)
+    setOpen(value);
   }
 
   const {
@@ -62,7 +68,7 @@ export default function Teachers() {
       </div>
 
       <div className="flex-1 flex flex-col p-0 box-border rounded">
-        <TeachersTable></TeachersTable>
+        <TeachersTable teachers={users ? users : []}></TeachersTable>
       </div>
     </div>
   );

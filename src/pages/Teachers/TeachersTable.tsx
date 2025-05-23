@@ -6,12 +6,13 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import type { UserData } from "@/models/user";
 
-export default function TeachersTable() {
-    const teachers = [
-    { name: "Leonardo Felix", email: "leo@email.com" },
-    { name: "Maria Benincasa", email: "maria@email.com" },
-    ];
+type Props = {
+    teachers: UserData[]
+}
+
+export default function TeachersTable({teachers}: Props) {
 
     return (
         <Table className="border">
@@ -22,7 +23,7 @@ export default function TeachersTable() {
                 </TableRow>
             </TableHeader>
             <TableBody className="bg-white">
-                    {teachers.map((teacher, index) => (
+                    {teachers?.map((teacher, index) => (
                         <TableRow key={index}>
                             <TableCell>{teacher.name}</TableCell>
                             <TableCell>{teacher.email}</TableCell>
