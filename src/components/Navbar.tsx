@@ -5,7 +5,6 @@ import { Calendar } from "./ui/calendar";
 import { useOutsideClick } from "../hooks/useOutsideClick";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDateStore } from "@/store/useDataStore";
-import useUserStore from "@/store/useLoggedUserStore";
 
 type Props = {
     changeCurrDate: (date: Date) => void, 
@@ -18,7 +17,8 @@ export default function NavBar({ changeCurrDate }: Props) {
     const [profileOpen, setProfileOpen ] = useState(false);
     const [calendarOpen, setCalendarOpen] = useState(false);
     const setSelecteDate = useDateStore(state => state.setSelectedDate);
-    const user = useUserStore();
+    const storedUser = localStorage.getItem("user");
+    const user = storedUser ? JSON.parse(storedUser) : null;
 
     const menuRef = useRef<HTMLDivElement | null>(null);
     const calendarRef = useRef<HTMLDivElement | null>(null);
@@ -77,9 +77,9 @@ export default function NavBar({ changeCurrDate }: Props) {
             </div>
 
             <div className="ml-auto flex gap-3 justify-center items-center">
-                <span className="xsm:block hidden">Bem Vindo <b>{user.user?.name}</b></span>
+                <span className="xsm:block hidden">Bem Vindo <b>{user?.name}</b></span>
                 <div  ref={menuRef}>
-                    <img onClick={() => setProfileOpen(!profileOpen)} src={`https://avatar.iran.liara.run/username?username=${user.user?.name.split(' ').join('+')}`} className="w-10 h-10 rounded hover:cursor-pointer hover:scale-110 transition" alt="" />
+                    <img onClick={() => setProfileOpen(!profileOpen)} src={`https://avatar.iran.liara.run/username?username=${user?.name.split(' ').join('+')}`} className="w-10 h-10 rounded hover:cursor-pointer hover:scale-110 transition" alt="" />
                     {profileOpen && (
                         <div className="absolute right-0 bottom-0 translate-y-[100%] mt-2 z-10" >
                             <ProfileOptions />

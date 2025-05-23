@@ -9,7 +9,7 @@ type Props = {
   name: string;
   value: string | number;
   onChange: (value: string | number) => void;
-  items: Item[];
+  items: Item[] | [];
   placeholder: string;
   label: string;
   error?: string;

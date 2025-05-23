@@ -52,9 +52,21 @@ export function formatDate(date: Date): string {
     return `${day}/${month}/${year}`;
 }
 
-export function parseDate(dateStr: string): Date {
-  const [day, month, year] = dateStr.split('-').map(Number);
+export function formatDate2(date: Date): string {
+    const day = String(date.getDate()).padStart(2,'0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`
+}
+
+export function parseDate(dateStr: string, splitter = '-'): Date {
+  const [day, month, year] = dateStr.split(splitter).map(Number);
   return new Date(year, month - 1, day);
+}
+
+export function parseDate2(dateStr: string): Date {
+    const [year, month, day] = dateStr.split('-').map(Number);
+    return new Date(year, month - 1, day);
 }
 
 export function getClassHours(start: string, end:string, interval: number): string[] {

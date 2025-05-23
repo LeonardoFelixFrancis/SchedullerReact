@@ -22,7 +22,7 @@ export default function DayColumn({ day, highlight, schedules, onRemoveSchedule 
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        {schedules.map((sched, i) => (
+        {schedules?.map((sched, i) => (
           <ScheduleCard
             key={i}
             time={sched.time}

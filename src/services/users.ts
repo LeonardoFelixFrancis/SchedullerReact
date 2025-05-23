@@ -7,6 +7,7 @@ export const userCreateService = async (data: UserData) => {
 }
 
 export const userListService = async (filter: UserFilter) => {
+    console.log('filters', filter)
     const response = await api.get('/users', {params: {...filter}});
     return response;
 }

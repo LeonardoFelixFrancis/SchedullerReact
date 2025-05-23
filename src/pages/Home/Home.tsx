@@ -1,50 +1,68 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import DayColumn from "./DayColumn";
 import { useDateStore } from "@/store/useDataStore";
-import { formatDate, getAllDaysOfWeek } from "@/utils/date_utils";
+import { formatDate, getAllDaysOfWeek, parseDate2 } from "@/utils/date_utils";
 import type WeekDay from "@/models/date";
+import type { LessonScheduleData } from "@/models/lessonSchedule";
+import useLessonSchedule from "@/hooks/useLessonSchedule";
 
 type Schedule = {
-    title: string;
-    time: string;
-}
+  title: string;
+  time: string;
+};
 
 type ScheduleMap = {
-    [day: string]: Schedule[]
-}
+  [day: string]: Schedule[];
+};
 
 export default function Home() {
-    const [schedules, setSchedules] = useState<ScheduleMap>({});
-    const [weekDays, setWeekDays] = useState<WeekDay[]>();
-    const currDate = useDateStore(state => state.selectedDate);
+  const { listLessonSchedule, lessonsSchedules } = useLessonSchedule();
 
-    useEffect(() => {
-        setWeekDays(getAllDaysOfWeek(currDate));
-    }, [currDate])
+  const [weekDays, setWeekDays] = useState<WeekDay[]>();
+  const currDate = useDateStore((state) => state.selectedDate);
 
-    const handleRemoveSchedule = (day: string, index: number) => {
-        setSchedules((prev) => {
-            const updated = [...(prev[day] || [])];
-            updated.splice(index, 1);
-            return { ...prev, [day]: updated };
-        })
-    };
+  useEffect(() => {
+    setWeekDays(getAllDaysOfWeek(currDate));
+    listLessonSchedule({});
+  }, [currDate, listLessonSchedule]);
 
-    return (
-        <>
-            <div className="flex flex-1 overflow-x-auto gap-4">
-                {weekDays?.map((day => (
-                    <DayColumn
-                        key={day.date}
-                        day={day}
-                        highlight={formatDate(currDate) == day.date}
-                        schedules={schedules[day.weekday] || []}
-                        onOpenModal={() => setCreateScheduleModalOpen(true)}
-                        onRemoveSchedule={(index) => handleRemoveSchedule(day.weekday, index)}
-                    />
-                )))}
-            </div>
+  const schedulesList = useMemo(() => {
+    const schedule_map: ScheduleMap = {};
 
-        </>
-    );
+    lessonsSchedules?.forEach((lesson: LessonScheduleData) => {
+      const date = parseDate2(lesson.date); // converte string para Date
+      const date_str = formatDate(date); // ex: "2025-05-23"
+
+      const schedule: Schedule = {
+        title: 'teste',
+        time: lesson.time,
+      };
+
+      if (!schedule_map[date_str]) {
+        schedule_map[date_str] = [];
+      }
+
+      schedule_map[date_str].push(schedule);
+    });
+
+    return schedule_map;
+  }, [lessonsSchedules]);
+
+  return (
+    <>
+      <div className="flex flex-1 overflow-x-auto gap-4">
+        {weekDays?.map((day) => (
+          <DayColumn
+            key={day.date}
+            day={day}
+            highlight={formatDate(currDate) == day.date}
+            schedules={schedulesList[day.date]}
+            onOpenModal={() => setCreateScheduleModalOpen(true)}
+            onRemoveSchedule={(index) => console.log(index)
+            }
+          />
+        ))}
+      </div>
+    </>
+  );
 }

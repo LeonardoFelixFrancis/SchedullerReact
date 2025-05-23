@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import type { LessonScheduleData, LessonScheduleFilter } from "@/models/lessonSchedule";
 import { createLessonScheduleService, getLessonScheduleService, listLessonScheduleService, updateLessonScheduleService, deleteLessonScheduleService } from "@/services/lessonSchedule";
 
@@ -19,13 +19,13 @@ export default function useLessonSchedule () {
         return null;
     }
 
-    const listLessonSchedule = async (filter: LessonScheduleFilter) => {
+    const listLessonSchedule = useCallback(async (filter: LessonScheduleFilter) => {
         const response = await listLessonScheduleService(filter);
 
         if (response.status === 200){
             setLessonSchedules(response.data);
         }
-    }
+    }, []);
 
     const deleteLessonSchedule = async (lesson_schedule_id: number) => {
         await deleteLessonScheduleService(lesson_schedule_id);

@@ -1,19 +1,15 @@
 import Modal from "../../components/Modal"
-import { useForm , Controller} from "react-hook-form"
+import { useForm } from "react-hook-form"
 import Input from "../../components/Input"
-import { ObjectSelect } from "@/components/ObjectSelect"
+import type { LessonData } from "@/models/lesson"
 
 type Props = {
     open: boolean;
     setOpen: (value: boolean) => void;
+    onSubmit: (data: LessonData) => void;
 }
 
-type TeacherCreateFormData = {
-    subject: string;
-    name: string;
-}
-
-export default function LessonsModal({ open, setOpen }: Props) {
+export default function LessonsModal({ open, setOpen, onSubmit }: Props) {
 
     const {
         register,
@@ -21,10 +17,10 @@ export default function LessonsModal({ open, setOpen }: Props) {
         reset,
         control,
         formState: { errors },
-    } = useForm<TeacherCreateFormData>();
+    } = useForm<LessonData>();
 
-    const onSubmit = (data: TeacherCreateFormData) => {
-        console.log(data);
+    const innerHandleSubmit = (data: LessonData) => {
+        onSubmit(data);
         reset();
         setOpen(false);
     }
@@ -32,19 +28,19 @@ export default function LessonsModal({ open, setOpen }: Props) {
     return (
         <Modal open={open} setOpen={setOpen}>
             <div>
-                <h1 className="text-xl font-semibold text-gray-800 mb-4 text-center" >Criar novo professor</h1>
+                <h1 className="text-xl font-semibold text-gray-800 mb-4 text-center" >Criar nova turma</h1>
 
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-                    <Input name="name" label="Nome da turma" registerProps={
-                        register("name", {required: 'O nome é um campo obrigatório.'})}
-                        error={errors.name?.message} />
+                <form onSubmit={handleSubmit(innerHandleSubmit)} className="flex flex-col gap-2">
+                    <Input name="lesson_name" label="Nome da turma" registerProps={
+                        register("lesson_name", {required: 'O nome é um campo obrigatório.'})}
+                        error={errors.lesson_name?.message} />
 
-                    <Input name="subject" label="Assunto" registerProps={
-                        register("subject", {required: 'O Assunto é um campo obrigatório.',
+                    <Input name="lesson_subject" label="Assunto" registerProps={
+                        register("lesson_subject", {required: 'O Assunto é um campo obrigatório.',
                         }
                         )
                     } 
-                    error={errors.subject?.message}
+                    error={errors.lesson_subject?.message}
                     />
 
                     <div className='flex justify-end gap-2 pt-2'>

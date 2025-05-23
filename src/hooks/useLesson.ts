@@ -1,11 +1,11 @@
 import type { LessonData } from "@/models/lesson";
 import type { LessonFilter } from "@/models/lesson";
 import { createLessonService, getLessonService, listLessonsService, updateLessonService, deleteLessonService } from "@/services/lessons";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 export default function useLesson() {
     
-    const [lessons, setLessons] = useState<LessonData[] | null>(null);
+    const [lessons, setLessons] = useState<LessonData[]>([]);
 
     const createLesson = async (data: LessonData) => {
         await createLessonService(data);
@@ -21,7 +21,7 @@ export default function useLesson() {
         return {};
     }
 
-    const listLesson = async (filter: LessonFilter) => {
+    const listLesson = useCallback(async (filter: LessonFilter) => {
         const response = await listLessonsService(filter);
 
         if (response.status === 200) {
@@ -29,7 +29,7 @@ export default function useLesson() {
         }
 
         return [];
-    }
+    }, [])
 
     const updateLesson = async (data: LessonData) => {
         await updateLessonService(data);

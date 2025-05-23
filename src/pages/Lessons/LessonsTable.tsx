@@ -6,12 +6,13 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import type { LessonData } from "@/models/lesson";
 
-export default function LessonsTable() {
-    const lessons = [
-    { name: "Bananinha", subject: "Física I" },
-    { name: "Bananinha 2", subject: "Matemática I"},
-    ];
+type Props = {
+    lessons: LessonData[];
+}
+
+export default function LessonsTable({ lessons }: Props) {
 
     return (
         <Table className="border">
@@ -24,8 +25,8 @@ export default function LessonsTable() {
             <TableBody className="bg-white">
                     {lessons.map((lesson, index) => (
                         <TableRow key={index}>
-                            <TableCell>{lesson.name}</TableCell>
-                            <TableCell>{lesson.subject}</TableCell>
+                            <TableCell>{lesson.lesson_name}</TableCell>
+                            <TableCell>{lesson.lesson_subject}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

@@ -1,25 +1,36 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LessonsTable from "./LessonsTable";
 import LessonsModal from "./LessonsModal";
-
-type TeacherFilterFormData = {
-  name: string;
-  subject: string;
-};
+import useLesson from "@/hooks/useLesson";
+import type { LessonData, LessonFilter } from "@/models/lesson";
 
 export default function Lessons() {
   const [open, setOpen] = useState(false);
+  const { createLesson, listLesson, lessons, updateLesson, getLesson, deleteLesson } = useLesson();
 
   const openOrCloseTeachersModal = (value: boolean) => {
     setOpen(value)
   }
 
+  const handleCreateLesson = (data: LessonData) => {
+    createLesson(data);
+    listLesson({}); 
+  }
+
+  const handleFilter = (data: LessonFilter) => {
+    listLesson(data);
+  }
+
+  useEffect(() => {
+    listLesson({});
+  }, [listLesson]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TeacherFilterFormData>();
+  } = useForm<LessonFilter>();
 
   return (
     <div className="flex-1 flex flex-col gap-3 ">
@@ -28,12 +39,12 @@ export default function Lessons() {
             <button onClick={() => setOpen(true)} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white py-2 px-4 rounded">
                 Criar nova turma
             </button>
-            <LessonsModal open={open} setOpen={openOrCloseTeachersModal}/>
+            <LessonsModal open={open} setOpen={openOrCloseTeachersModal} onSubmit={handleCreateLesson}/>
         </div>
         <div className="flex p-3 bg-white rounded">
           <form
             className="w-full flex flex-col sm:flex-row items-end gap-3"
-            onSubmit={handleSubmit(() => {})}
+            onSubmit={handleSubmit(handleFilter)}
           >
             <div className="w-full">
               <label className="block text-sm font-medium text-gray-700">
@@ -41,7 +52,7 @@ export default function Lessons() {
               </label>
               <input
                 className="mt-1 block w-full px-4 py-2 border rounded"
-                {...register("name")}
+                {...register("lesson_name")}
               />
             </div>
             <div className="w-full">
@@ -50,7 +61,7 @@ export default function Lessons() {
               </label>
               <input
                 className="mt-1 block w-full px-4 py-2 border rounded"
-                {...register("subject")}
+                {...register("lesson_subject")}
               />
             </div>
 
@@ -62,7 +73,7 @@ export default function Lessons() {
       </div>
 
       <div className="flex-1 flex flex-col p-0 box-border rounded">
-        <LessonsTable></LessonsTable>
+        <LessonsTable lessons={lessons}></LessonsTable>
       </div>
     </div>
   );
