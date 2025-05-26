@@ -6,7 +6,7 @@ import { useState } from "react";
 type Props = {
   day: WeekDay;
   highlight: boolean;
-  schedules: { title: string, time: string }[];
+  schedules: { id: number, title: string, time: string, teacher_name: string }[];
   onRemoveSchedule: (index: number) => void;
 }
 
@@ -24,10 +24,11 @@ export default function DayColumn({ day, highlight, schedules, onRemoveSchedule 
       <div className="flex-1 overflow-y-auto">
         {schedules?.map((sched, i) => (
           <ScheduleCard
+            id={sched.id}
             key={i}
+            teacher_name={sched.teacher_name}
             time={sched.time}
             title={sched.title}
-            onRemove={() => onRemoveSchedule(i)}
           />
         ))}
       </div>
@@ -41,12 +42,11 @@ export default function DayColumn({ day, highlight, schedules, onRemoveSchedule 
       </button>
 
       
-      <CreateScheduleModal
-          day={day.date}
-          open={createModalOpen}
-          setOpen={setCreateModalOpen}
-          onSubmit={(data) => {console.log(data)}}
-      />
+      {createModalOpen && (<CreateScheduleModal
+            day={day.date}
+            open={createModalOpen}
+            setOpen={setCreateModalOpen}
+        />)}
 
     </div>
   )

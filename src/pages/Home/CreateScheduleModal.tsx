@@ -10,23 +10,23 @@ import { useEffect, useMemo } from "react";
 import type { UserData } from "@/models/user";
 import type { LessonData } from "@/models/lesson";
 import type { LessonScheduleData } from "@/models/lessonSchedule";
+import { useLessonScheduleStore } from "@/store/lessonScheduleStore";
 
 type Props = {
   day: string;
   open: boolean;
   setOpen: (value: boolean) => void;
-  onSubmit: (data: LessonScheduleData) => void;
 };
 
 export default function CreateScheduleModal({
   day,
   open,
   setOpen,
-  onSubmit,
 }: Props) {
   const { users, userList } = useUser();
   const { lessons, listLesson } = useLesson();
-  const { createLessonSchedule } = useLessonSchedule();
+  const {createLessonSchedule} = useLessonScheduleStore();
+
   const {
     register,
     handleSubmit,

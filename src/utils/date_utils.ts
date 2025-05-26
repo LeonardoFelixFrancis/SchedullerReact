@@ -29,13 +29,13 @@ export function getWeekRange(date: Date = new Date()): { sunday: Date; saturday:
     return { sunday, saturday}
 }
 
-export function getAllDaysOfWeek(today: Date = new Date()): WeekDay[]{
+export function getAllDaysOfWeek(today: Date = new Date(), get_iso: boolean = false): WeekDay[]{
     const { sunday, saturday } = getWeekRange(today);
     const days = [];
     const day = sunday;
 
     while (day <= saturday) {
-        const dateString = formatDate(day)
+        const dateString = get_iso ? day.toISOString() : formatDate(day) 
         const dayNum = day.getDay();
         const weekDay = weekDays[dayNum];
         days.push({date: dateString, weekday: weekDay});
@@ -43,6 +43,22 @@ export function getAllDaysOfWeek(today: Date = new Date()): WeekDay[]{
     }
 
     return days;
+}
+
+export function selectDateOfWeekByWeekday(today: Date = new Date(), weekday: number): Date | null{
+    const { sunday, saturday } = getWeekRange(today);
+    const day = sunday;
+
+    while (day <= saturday) {
+        const dayNum = day.getDay();
+        
+        if (weekday === dayNum) {
+            return day;
+        }
+        day.setDate(day.getDate() + 1);
+    }
+
+    return null;
 }
 
 export function formatDate(date: Date): string {
@@ -89,4 +105,14 @@ export function getClassHours(start: string, end:string, interval: number): stri
     }
 
     return result;
+}
+
+export function getDateOneWeekBeforeOrAfter(date: Date, before: boolean = false) {
+    const new_date = new Date(date);
+    const diff = before ? -7 : 7
+    new_date.setDate(date.getDate() + diff);
+
+    const final_date = selectDateOfWeekByWeekday(new_date, new_date.getDay());
+
+    return final_date ? final_date : new_date;
 }

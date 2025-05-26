@@ -7,6 +7,9 @@ import { useState } from 'react'
 import NavBar from './components/Navbar'
 import Teachers from './pages/Teachers/Teachers'
 import Lessons from './pages/Lessons/Lessons'
+import { ToastContainer, toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
 
@@ -26,6 +29,7 @@ function App() {
         <Route path='/teachers' element={<Teachers />} />
         <Route path='/lessons' element={<Lessons />} />
       </Routes>
+       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </div>
   )
 }

@@ -26,7 +26,7 @@ export function ObjectSelect({
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const selected = items.find((item) => String(item.value) === String(value)) || null;
+  const selected = items?.find((item) => String(item.value) === String(value)) || null;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

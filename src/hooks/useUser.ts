@@ -6,6 +6,7 @@ import {
   userListService,
 } from "@/services/users";
 import { useState, useCallback } from "react";
+import { toast } from "react-toastify";
 
 export default function useUser() {
     const [users, setUsers] = useState<UserData[] | null>();
@@ -14,6 +15,7 @@ export default function useUser() {
   const userCreate = async (data: UserData) => {
     await userCreateService(data);
     await userList({});
+    toast.success('Usuário criado com sucesso.')
   };
 
   const userGet = async (user_id: number): Promise<UserData | null> => {
