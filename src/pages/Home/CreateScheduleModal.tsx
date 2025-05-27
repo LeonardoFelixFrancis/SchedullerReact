@@ -5,27 +5,30 @@ import { Select } from "../../components/Select";
 import { getClassHours, parseDate, formatDate2 } from "@/utils/date_utils";
 import useUser from "@/hooks/useUser";
 import useLesson from "@/hooks/useLesson";
-import useLessonSchedule from "@/hooks/useLessonSchedule";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { UserData } from "@/models/user";
 import type { LessonData } from "@/models/lesson";
 import type { LessonScheduleData } from "@/models/lessonSchedule";
 import { useLessonScheduleStore } from "@/store/lessonScheduleStore";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {
-  day: string;
+  day?: string | null;
   open: boolean;
   setOpen: (value: boolean) => void;
+  id: number;
 };
 
 export default function CreateScheduleModal({
   day,
   open,
   setOpen,
+  id,
 }: Props) {
   const { users, userList } = useUser();
   const { lessons, listLesson } = useLesson();
-  const {createLessonSchedule} = useLessonScheduleStore();
+  const [ modalDate, setModalDate ] = useState<string>('');
+  const {createLessonSchedule, getLessonSchedule, updateLessonSchedule } = useLessonScheduleStore();
 
   const {
     register,
@@ -36,17 +39,41 @@ export default function CreateScheduleModal({
   } = useForm<LessonScheduleData>();
 
   const submitForm = (data: LessonScheduleData) => {
-    const modal_date = parseDate(day, '/');
-    console.log(modal_date);
-    data.date = formatDate2(modal_date); 
-    createLessonSchedule(data);
+    if (id){
+      updateLessonSchedule({...data, date: modalDate});
+    } 
+    
+    if (day){
+      const modal_date = parseDate(day, '/');
+      data.date = formatDate2(modal_date); 
+      createLessonSchedule(data);
+    }
+    
     reset();
     setOpen(false);
   };
 
+  const initFormValues = async () => {
+    console.log('id', id);
+    if (id){
+      const lessonSchedule = await getLessonSchedule(id);
+      
+      if (lessonSchedule) {
+        setModalDate(lessonSchedule.date);
+        reset({
+          id,
+          lesson_id: lessonSchedule.lesson_id,
+          teacher_id: lessonSchedule.teacher_id,
+          time: lessonSchedule.time,
+        })
+      }
+    }
+  }
+
   useEffect(() => {
     userList({});
     listLesson({});
+    initFormValues()
   }, [userList, listLesson]);
 
   const teachersList = useMemo(() => {
@@ -128,7 +155,7 @@ export default function CreateScheduleModal({
             type="submit"
             className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 hover:cursor-pointer"
           >
-            Criar
+            Salvar
           </button>
         </div>
       </form>

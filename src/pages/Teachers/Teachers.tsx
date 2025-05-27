@@ -12,7 +12,7 @@ type TeacherFilterFormData = {
 
 export default function Teachers() {
   const [open, setOpen] = useState(false);
-  const { users, userList, userCreate } = useUser();
+  const { users, userList, userCreate, userDelete } = useUser();
 
   useEffect(() => {
     userList({});
@@ -26,6 +26,11 @@ export default function Teachers() {
     userCreate({ email: data.email, name: data.name, username: data.name });
     userList({});
   };
+
+  const handleDeleteTeacher = (teacher_id: number) => {
+    userDelete(teacher_id);
+    userList({});
+  }
 
   const {
     register,
@@ -85,7 +90,7 @@ export default function Teachers() {
       </div>
 
       <div className="flex-1 flex flex-col p-0 box-border rounded">
-        <TeachersTable teachers={users ? users : []}></TeachersTable>
+        <TeachersTable teachers={users ? users : []} deleteTeacher={handleDeleteTeacher}></TeachersTable>
       </div>
     </div>
   );

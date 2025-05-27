@@ -1,15 +1,16 @@
-import type { UserData } from "@/models/user";
+import type { UserData, UserResponse } from "@/models/user";
 import type { UserFilter } from "@/models/user";
 import {
   userCreateService,
   userGetService,
   userListService,
+  userDeleteService,
 } from "@/services/users";
 import { useState, useCallback } from "react";
 import { toast } from "react-toastify";
 
 export default function useUser() {
-    const [users, setUsers] = useState<UserData[] | null>();
+    const [users, setUsers] = useState<UserResponse[] | null>();
 
 
   const userCreate = async (data: UserData) => {
@@ -38,5 +39,12 @@ export default function useUser() {
     return [];
   },[]);
 
-  return {userCreate, userGet, userList, users}
+  const userDelete = async (teacher_id: number): Promise<void> => {
+    const response = await userDeleteService(teacher_id);
+    if (response.status === 200){
+      toast.success('Professor deletado com sucesso.')
+    }
+  }
+
+  return {userCreate, userGet, userList, userDelete, users}
 }

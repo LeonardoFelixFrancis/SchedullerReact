@@ -43,6 +43,7 @@ export const useLessonScheduleStore = create<LessonScheduleStore>((set, get) => 
   updateLessonSchedule: async (data) => {
     await updateLessonScheduleService(data);
     await get().listLessonSchedule({});
+    toast.success('Aula atualizada com sucesso.')
   },
 
   deleteLessonSchedule: async (id) => {

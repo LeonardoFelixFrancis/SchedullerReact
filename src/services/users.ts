@@ -16,3 +16,8 @@ export const userGetService = async (user_id: number) => {
     const response = await api.get(`/users/${user_id}`);
     return response;
 }
+
+export const userDeleteService = async (teacher_id: number) => {
+    const response = await api.delete(`/users/teacher/${teacher_id}`);
+    return response;
+}
