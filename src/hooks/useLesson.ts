@@ -1,12 +1,11 @@
-import type { LessonData } from "@/models/lesson";
-import type { LessonFilter } from "@/models/lesson";
+import type { LessonData, LessonFilter, LessonResponse } from "@/models/lesson";
 import { createLessonService, getLessonService, listLessonsService, updateLessonService, deleteLessonService } from "@/services/lessons";
 import { useState, useCallback } from "react";
 import { toast } from "react-toastify";
 
 export default function useLesson() {
     
-    const [lessons, setLessons] = useState<LessonData[]>([]);
+    const [lessons, setLessons] = useState<LessonResponse[]>([]);
 
     const createLesson = async (data: LessonData) => {
         await createLessonService(data);
@@ -39,7 +38,7 @@ export default function useLesson() {
 
     const deleteLesson = async (lesson_id: number) => {
         await deleteLessonService(lesson_id);
-        toast('Aula deletada com successo.')
+        toast.success('Aula deletada com successo.')
     }
 
     return {createLesson, getLesson, listLesson, updateLesson, deleteLesson, lessons}

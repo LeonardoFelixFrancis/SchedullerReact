@@ -8,16 +8,18 @@ type Props = {
   time: string;
   id: number;
   teacher_name: string;
+  teacher_active: boolean,
+  lesson_active: boolean,
 }
 
-export default function ScheduleCard({ title, teacher_name, time, id}: Props) {
+export default function ScheduleCard({ title, teacher_name, time, id, teacher_active, lesson_active}: Props) {
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
   const { deleteLessonSchedule } = useLessonScheduleStore();
 
   return (
     <div className="relative w-[95%] ml-auto mr-auto group bg-white shadow p-3 rounded border border-gray-200 mb-3 hover:scale-105 transition hover:cursor-pointer hover:bg-gray-300">
-      <h3 className='font-semibold text-sm'>{title}</h3>
-      <p className='text-xs text-gray-500'>{teacher_name}</p>
+      <h3 className={`font-semibold text-sm  ${lesson_active ? '' : 'line-through'}`}>{title}</h3>
+      <p className={`text-xs text-gray-500 ${teacher_active ? '' : 'line-through'}`}>{teacher_name}</p>
       <p className='text-xs text-gray-500'>{time}</p>
 
       <button 

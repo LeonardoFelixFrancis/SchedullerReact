@@ -12,6 +12,8 @@ type Schedule = {
   title: string;
   time: string;
   teacher_name: string;
+  teacher_active: boolean;
+  lesson_active: boolean;
 };
 
 type ScheduleMap = {
@@ -44,8 +46,12 @@ export default function Home() {
         id: lesson.id!,
         title: lesson.lesson_name,
         time: lesson.time,
-        teacher_name: lesson.teacher_name
+        teacher_name: lesson.teacher_name,
+        teacher_active: lesson.teacher_active,
+        lesson_active: lesson.lesson_active
       };
+
+      console.log('schedule', schedule);
 
       if (!schedule_map[date_str]) {
         schedule_map[date_str] = [];

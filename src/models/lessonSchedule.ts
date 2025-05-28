@@ -14,7 +14,9 @@ export interface LessonScheduleResponse {
     time: string;
     teacher_id: number;
     teacher_name: string;
+    teacher_active: boolean;
     lesson_name: string;
+    lesson_active: boolean;
 }
 
 export interface LessonScheduleFilter {

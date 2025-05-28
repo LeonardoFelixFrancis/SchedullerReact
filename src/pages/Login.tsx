@@ -69,11 +69,15 @@ export default function Login() {
                     </div>
 
                     <button type='submit' className='w-full bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white py-2 px-4 rounded mb-1'>
-                        Sign In
+                        Entrar
                     </button>
 
-                    <p onClick={() => navigate('/register')} className='text-blue-500 text-center hover:text-blue-800 hover:cursor-pointer'>Sign-Up</p>
-
+                    <button onClick={() => navigate('/register')} className='w-full hover:border hover:border-blue-600 hover:cursor-pointer text-black py-2 px-4 rounded mb-1'>
+                        Registrar-se
+                    </button>
+                        
+                    <p onClick={() => navigate('/forgot_password')} className='text-blue-500 text-center hover:text-blue-800 hover:cursor-pointer'>Recuperar Senha</p>
+      
                 </form>
             </div>
         </div>

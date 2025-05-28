@@ -16,7 +16,7 @@ type Props = {
   day?: string | null;
   open: boolean;
   setOpen: (value: boolean) => void;
-  id: number;
+  id?: number;
 };
 
 export default function CreateScheduleModal({

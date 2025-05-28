@@ -6,13 +6,15 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import type { LessonData } from "@/models/lesson";
+import { TrashIcon } from "lucide-react";
+import type { LessonResponse } from "@/models/lesson";
 
 type Props = {
-    lessons: LessonData[];
+    lessons: LessonResponse[];
+    deleteLesson: (id: number) => void;
 }
 
-export default function LessonsTable({ lessons }: Props) {
+export default function LessonsTable({ lessons, deleteLesson }: Props) {
 
     return (
         <Table className="border">
@@ -20,6 +22,7 @@ export default function LessonsTable({ lessons }: Props) {
                 <TableRow >
                     <TableHead>Nome</TableHead>
                     <TableHead>Assunto</TableHead>
+                    <TableHead className="text-center">Ações</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody className="bg-white">
@@ -27,6 +30,9 @@ export default function LessonsTable({ lessons }: Props) {
                         <TableRow key={index}>
                             <TableCell>{lesson.lesson_name}</TableCell>
                             <TableCell>{lesson.lesson_subject}</TableCell>
+                            <TableCell align="center">
+                                <TrashIcon className="h-5 w-5 text-red-600 hover:cursor-pointer" onClick={() => deleteLesson(lesson.id)}/>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

@@ -6,7 +6,7 @@ import { useState } from "react";
 type Props = {
   day: WeekDay;
   highlight: boolean;
-  schedules: { id: number, title: string, time: string, teacher_name: string }[];
+  schedules: { id: number, title: string, time: string, teacher_name: string, teacher_active: boolean, lesson_active: boolean }[];
   onRemoveSchedule: (index: number) => void;
 }
 
@@ -29,6 +29,8 @@ export default function DayColumn({ day, highlight, schedules, onRemoveSchedule 
             teacher_name={sched.teacher_name}
             time={sched.time}
             title={sched.title}
+            teacher_active={sched.teacher_active}
+            lesson_active={sched.lesson_active}
           />
         ))}
       </div>

@@ -40,6 +40,18 @@ export default function useAuth() {
     }
   };
 
+  const userResetPassword = async (data, token) => {
+    const response = await resetPasswordService(data, token);
+    navigate('/')
+    toast('Senha alterada com sucesso.')
+  }
+
+  const userForgotPassword = async (email) => {
+    const response = await ForgotPasswordService(email);
+    navigate('/')
+    toast.success('E-mail de recuperação de senha enviado com sucesso.')
+  }
+
   const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");

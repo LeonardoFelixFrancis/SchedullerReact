@@ -13,9 +13,14 @@ export default function Lessons() {
     setOpen(value)
   }
 
-  const handleCreateLesson = (data: LessonData) => {
-    createLesson(data);
-    listLesson({}); 
+  const handleCreateLesson = async (data: LessonData) => {
+    await createLesson(data);
+    await listLesson({}); 
+  }
+
+  const handleDeleteLesson = async (lesson_id: number) => {
+    await deleteLesson(lesson_id);
+    await listLesson({});
   }
 
   const handleFilter = (data: LessonFilter) => {
@@ -73,7 +78,7 @@ export default function Lessons() {
       </div>
 
       <div className="flex-1 flex flex-col p-0 box-border rounded">
-        <LessonsTable lessons={lessons}></LessonsTable>
+        <LessonsTable lessons={lessons} deleteLesson={handleDeleteLesson}></LessonsTable>
       </div>
     </div>
   );

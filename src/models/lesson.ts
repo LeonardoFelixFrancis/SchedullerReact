@@ -5,6 +5,13 @@ export interface LessonData {
     students: string[]; 
 }
 
+export interface LessonResponse {
+    id: number;
+    lesson_name: string;
+    lesson_subject: string;
+    students: string[]; 
+}
+
 export interface LessonFilter {
     id?: number | null;
     lesson_name?: string | null;
