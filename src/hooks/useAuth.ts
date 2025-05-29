@@ -1,9 +1,9 @@
-import { loginService, registerService } from "@/services/auth";
+import { loginService, registerService, resetPasswordService, forgotPasswordService } from "@/services/auth";
 import type LoginData from "@/models/login";
 import type RegisterData from "@/models/register";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { isAxiosError } from "axios";
+import type ResetPasswordData from "@/models/reset_password";
 
 export default function useAuth() {
   const navigate = useNavigate();
@@ -40,14 +40,14 @@ export default function useAuth() {
     }
   };
 
-  const userResetPassword = async (data, token) => {
-    const response = await resetPasswordService(data, token);
+  const userResetPassword = async (data: ResetPasswordData, token: string) => {
+    await resetPasswordService(data, token);
     navigate('/')
     toast('Senha alterada com sucesso.')
   }
 
-  const userForgotPassword = async (email) => {
-    const response = await ForgotPasswordService(email);
+  const userForgotPassword = async (email: string) => {
+    await forgotPasswordService(email);
     navigate('/')
     toast.success('E-mail de recuperação de senha enviado com sucesso.')
   }
@@ -58,5 +58,5 @@ export default function useAuth() {
     localStorage.removeItem("refresh_token");
   };
 
-  return { login, logout, userRegister };
+  return { login, logout, userRegister, userForgotPassword, userResetPassword };
 }

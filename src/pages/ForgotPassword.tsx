@@ -7,7 +7,7 @@ type ForgotPasswordFormData = {
 }
 
 export default function ForgotPassword() {
-    const { login }  = useAuth();
+    const { userForgotPassword }  = useAuth();
 
     const {
         register,
@@ -19,8 +19,8 @@ export default function ForgotPassword() {
 
     const navigate = useNavigate();
 
-    const onSubmit = (data: ForgotPasswordFormData) => {
-        const { email } = data;
+    const onSubmit = async (data: ForgotPasswordFormData) => {
+        await userForgotPassword(data.email);
     }
 
     return (

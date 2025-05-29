@@ -1,5 +1,6 @@
 import type { UserData, UserResponse } from "@/models/user";
 import type { UserFilter } from "@/models/user";
+import ResetPassword from "@/pages/Resetpassword";
 import {
   userCreateService,
   userGetService,
@@ -46,5 +47,5 @@ export default function useUser() {
     }
   }
 
-  return {userCreate, userGet, userList, userDelete, users}
+  return {userCreate, userGet, userList, userDelete, ResetPassword, users}
 }

@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
-import useUser from "@/hooks/useUser";
 import { useForm } from "react-hook-form";
+import useAuth from "@/hooks/useAuth";
 
 type ResetPassowrdForm = {
     password: string;
@@ -9,7 +9,7 @@ type ResetPassowrdForm = {
 
 export default function ResetPassword() {
     const { token } = useParams();
-    const { ResetPassword } = useUser();
+    const { userResetPassword } = useAuth();
 
     const navigate = useNavigate();
 
@@ -21,8 +21,8 @@ export default function ResetPassword() {
             mode: 'onSubmit'
         });
 
-    const onSubmit = (data: ResetPassowrdForm) => {
-        console.log('data',data);
+    const onSubmit = async (data: ResetPassowrdForm) => {
+        await userResetPassword(data, token);
     }
 
     return (
