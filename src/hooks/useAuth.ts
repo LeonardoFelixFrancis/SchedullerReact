@@ -20,6 +20,7 @@ export default function useAuth() {
           username: user_data.username,
           name: user_data.name,
           email: user_data.email,
+          is_adm: user_data.is_adm,
           id: user_data.id,
         })
       );

@@ -51,7 +51,7 @@ export default function Login() {
                     </div>
 
                     <div>
-                        <label className='block text-sm font-medium text-gray-700'>Password</label>
+                        <label className='block text-sm font-medium text-gray-700'>Senha</label>
                         <input type="password"
                             className={`mt-1 block w-full px-4 py-2 border rounded ${errors.password ? 'border-red-500' : 'border-gray-300'
                                 }`}

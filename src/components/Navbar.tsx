@@ -49,14 +49,14 @@ export default function NavBar({ changeCurrDate }: Props) {
                     <HomeIcon onClick={() => navigate('/home')} title="Gerenciar professores" className="h-10 w-10 hover:cursor-pointer hover:scale-110 transition" />
                 </div>
 
-                <div>
+                {user?.is_adm && <div>
                     <UserIcon onClick={() => navigate('/teachers')} title="Gerenciar professores" className="h-10 w-10 hover:cursor-pointer hover:scale-110 transition" />
-                </div>
+                </div>}
 
                 
-                <div>
+                {user?.is_adm && <div>
                     <BookOpenIcon onClick={() => navigate('/lessons')} title="Gerenciar professores" className="h-10 w-10 hover:cursor-pointer hover:scale-110 transition" />
-                </div>
+                </div>}
 
                 { '/home' == location.pathname &&
                     <div ref={calendarRef}>

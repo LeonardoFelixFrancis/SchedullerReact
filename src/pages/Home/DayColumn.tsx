@@ -13,6 +13,8 @@ type Props = {
 export default function DayColumn({ day, highlight, schedules, onRemoveSchedule }: Props) {
 
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
 
   return (
     <div className={`relative flex-1 min-w-[200px]  rounded p-3 flex flex-col ${ highlight ? 'border-gray-600 border-4 bg-gray-200' : 'border-gray-300  border bg-secondary' }`}>
@@ -35,13 +37,13 @@ export default function DayColumn({ day, highlight, schedules, onRemoveSchedule 
         ))}
       </div>
 
-      <button 
+      {user?.is_adm && <button 
         onClick={() => setCreateModalOpen(true)}
         className="absolute bottom-3 right-3 bg-gray-700 text-white rounded-full w-8 h-8 flex items-center justify-center shadow hover:bg-gray-900 hover:cursor-pointer border hover:scale-110 transition"
         title={`Add Schedule to ${day.date}`}
       >
         +
-      </button>
+      </button>}
 
       
       {createModalOpen && (<CreateScheduleModal

@@ -14,6 +14,7 @@ type RegisterFormData = {
 export default function Register() {
 
     const { userRegister } = useAuth();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -41,7 +42,7 @@ export default function Register() {
                 <h2 className='text-2xl font-bold mb-6 text-center'>Register</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
                     <div>
-                        <label className='block text-sm font-medium text-gray-700'>Usename</label>
+                        <label className='block text-sm font-medium text-gray-700'>Nome de usuário</label>
                         <input className={`mt-1 block w-full px-4 py-2 border rounded ${errors.username ? 'border-red-500': 'border-gray-300'}`}
                         {
                             ...register('username', {
@@ -53,7 +54,7 @@ export default function Register() {
                         )}
                     </div>
                     <div>
-                        <label className='block text-sm font-medium text-gray-700'>Name</label>
+                        <label className='block text-sm font-medium text-gray-700'>Nome</label>
                         <input className={`mt-1 block w-full px-4 py-2 border rounded ${errors.username ? 'border-red-500': 'border-gray-300'}`}
                         {
                             ...register('name', {
@@ -80,7 +81,7 @@ export default function Register() {
                         )}
                     </div>
                     <div>
-                        <label className='block text-sm font-medium text-gray-700'>Password</label>
+                        <label className='block text-sm font-medium text-gray-700'>Senha</label>
                         <input type='password' className={`mt-1 block w-full px-4 py-2 border rounded ${errors.username ? 'border-red-500': 'border-gray-300'}`}
                         {
                             ...register('password', {
@@ -92,7 +93,7 @@ export default function Register() {
                         )}
                     </div>
                      <div>
-                        <label className='block text-sm font-medium text-gray-700'>Confirm Password</label>
+                        <label className='block text-sm font-medium text-gray-700'>Confirmar Senha</label>
                         <input type='password' className={`mt-1 block w-full px-4 py-2 border rounded ${errors.username ? 'border-red-500': 'border-gray-300'}`}
                         {
                             ...register('confirm_password', {
@@ -105,7 +106,7 @@ export default function Register() {
                         )}
                     </div>
                     <div>
-                        <label className='block text-sm font-medium text-gray-700'>Company Name</label>
+                        <label className='block text-sm font-medium text-gray-700'>Nome da empresa</label>
                         <input className={`mt-1 block w-full px-4 py-2 border rounded ${errors.username ? 'border-red-500': 'border-gray-300'}`}
                         {
                             ...register('company_name', {
@@ -118,8 +119,9 @@ export default function Register() {
                     </div>
 
                     <button type='submit' className='w-full bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white py-2 px-4 rounded mb-1'>
-                        Sign-Up
+                        Registrar-se
                     </button>
+                    <p onClick={() => navigate('/')} className='text-blue-500 text-center hover:text-blue-800 hover:cursor-pointer'>Cancelar</p>
 
                 </form>
             </div>

@@ -22,7 +22,7 @@ export default function ResetPassword() {
         });
 
     const onSubmit = async (data: ResetPassowrdForm) => {
-        await userResetPassword(data, token);
+        await userResetPassword(data, token!);
     }
 
     return (
@@ -33,7 +33,7 @@ export default function ResetPassword() {
 
                     <div>
                         <label className='block text-sm font-medium text-gray-700'>Senha</label>
-                        <input className={`mt-1 block w-full px-4 py-2 border rounded ${errors.password ? 'border-red-500' : 'border-gray-300'
+                        <input type="password" className={`mt-1 block w-full px-4 py-2 border rounded ${errors.password ? 'border-red-500' : 'border-gray-300'
                             }`}
                             {
                             ...register('password', {

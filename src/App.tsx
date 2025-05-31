@@ -16,7 +16,7 @@ function App() {
   const location = useLocation();
   const [currDate, setCurrDate] = useState<Date>(new Date());
 
-  const hideNavBarRoutes = ["/", "/register"];
+  const hideNavBarRoutes = ["/", "/register", "/forgot_password"];
   const shouldHideNavBar =
     hideNavBarRoutes.includes(location.pathname) ||
     location.pathname.startsWith("/reset_password");
