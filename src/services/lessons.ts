@@ -22,6 +22,6 @@ export const deleteLessonService = async (lesson_id: number) => {
 }
 
 export const updateLessonService = async (data: LessonData) => {
-    const response = await api.put('/lessno', data);
+    const response = await api.put('/lesson', data);
     return response;
 }
