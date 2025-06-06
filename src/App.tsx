@@ -7,6 +7,7 @@ import { useState } from "react";
 import NavBar from "./components/Navbar";
 import Teachers from "./pages/Teachers/Teachers";
 import Lessons from "./pages/Lessons/Lessons";
+import Students from "./pages/Students/Students";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ResetPassword from "./pages/Resetpassword";
@@ -36,6 +37,7 @@ function App() {
         <Route path="/lessons" element={<Lessons />} />
         <Route path="/reset_password/:token" element={<ResetPassword />} />
         <Route path="/forgot_password" element={<ForgotPassword />} />
+        <Route path="/students" element={<Students />} />
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </div>

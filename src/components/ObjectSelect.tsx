@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useRef } from "react";
 
 type Item = {
@@ -7,12 +8,13 @@ type Item = {
 
 type Props = {
   name: string;
-  value: string | number;
-  onChange: (value: string | number) => void;
+  value?: string | number;
+  onChange: (value: any) => void;
   items: Item[] | [];
   placeholder: string;
   label: string;
   error?: string;
+  getObject?: boolean;
 };
 
 export function ObjectSelect({
@@ -23,6 +25,7 @@ export function ObjectSelect({
   placeholder,
   label,
   error,
+  getObject = false,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -82,7 +85,12 @@ export function ObjectSelect({
                 key={item.value}
                 onClick={(event) => {
                   event.stopPropagation();
-                  onChange(item.value);
+                  if (getObject){
+                    onChange(item);
+                  }else {
+                    onChange(item.value);
+                  }
+
                   setIsOpen(false);
                 }}
                 className={`px-3 py-2 hover:bg-blue-500 hover:text-white cursor-pointer ${

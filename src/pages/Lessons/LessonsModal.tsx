@@ -2,6 +2,7 @@ import Modal from "../../components/Modal"
 import { useForm } from "react-hook-form"
 import Input from "../../components/Input"
 import type { LessonData } from "@/models/lesson"
+import MultiSelect from "@/components/multiSelect"
 
 type Props = {
     open: boolean;
@@ -42,6 +43,8 @@ export default function LessonsModal({ open, setOpen, onSubmit }: Props) {
                     } 
                     error={errors.lesson_subject?.message}
                     />
+
+                    <MultiSelect items={[{value: 'teste', description: 'aaaaaa'}]} name="students" placeholder="Adicione alunos" label="Alunos" />
 
                     <div className='flex justify-end gap-2 pt-2'>
                         <button type='button' onClick={() => setOpen(false)} className='text-gray-600 hover:underline hover:cursor-pointer'>
