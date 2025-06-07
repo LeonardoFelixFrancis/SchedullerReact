@@ -8,6 +8,11 @@ export default function useLesson() {
     const [lessons, setLessons] = useState<LessonResponse[]>([]);
 
     const createLesson = async (data: LessonData) => {
+
+        const students = data.students; 
+        const treatedStudents = students.map((student) => student.value);
+        data.students = treatedStudents; 
+
         await createLessonService(data);
         toast.success('Aula criada com sucesso.')
     }

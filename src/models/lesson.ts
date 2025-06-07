@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface LessonData {
     id?: number | null;
     lesson_name: string;
     lesson_subject: string;
-    students: string[]; 
+    students: any[]; 
 }
 
 export interface LessonResponse {
