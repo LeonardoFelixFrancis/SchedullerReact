@@ -17,7 +17,7 @@ export default function useLesson() {
         toast.success('Aula criada com sucesso.')
     }
 
-    const getLesson = async (lesson_id: number) => {
+    const getLesson = useCallback(async (lesson_id: number) => {
         const response = await getLessonService(lesson_id);
         
         if (response.status === 200){
@@ -25,7 +25,7 @@ export default function useLesson() {
         }
         
         return {};
-    }
+    }, [])
 
     const listLesson = useCallback(async (filter: LessonFilter) => {
         const response = await listLessonsService(filter);
@@ -38,6 +38,10 @@ export default function useLesson() {
     }, [])
 
     const updateLesson = async (data: LessonData) => {
+        const students = data.students; 
+        const treatedStudents = students.map((student) => student.value);
+        data.students = treatedStudents; 
+
         await updateLessonService(data);
     }
 

@@ -7,7 +7,7 @@ import type { LessonData, LessonFilter } from "@/models/lesson";
 
 export default function Lessons() {
   const [open, setOpen] = useState(false);
-  const { createLesson, listLesson, lessons, updateLesson, getLesson, deleteLesson } = useLesson();
+  const { createLesson, listLesson, lessons, updateLesson, deleteLesson } = useLesson();
 
   const openOrCloseTeachersModal = (value: boolean) => {
     setOpen(value)
@@ -15,6 +15,11 @@ export default function Lessons() {
 
   const handleCreateLesson = async (data: LessonData) => {
     await createLesson(data);
+    await listLesson({}); 
+  }
+
+    const handleEditLesson = async (data: LessonData) => {
+    await updateLesson(data);
     await listLesson({}); 
   }
 
@@ -78,7 +83,7 @@ export default function Lessons() {
       </div>
 
       <div className="flex-1 flex flex-col p-0 box-border rounded">
-        <LessonsTable lessons={lessons} deleteLesson={handleDeleteLesson}></LessonsTable>
+        <LessonsTable lessons={lessons} deleteLesson={handleDeleteLesson} editLesson={handleEditLesson}></LessonsTable>
       </div>
     </div>
   );
