@@ -1,6 +1,7 @@
 import { TrashIcon, PencilSquareIcon, ClipboardIcon } from '@heroicons/react/24/outline';
 import { useLessonScheduleStore } from '@/store/lessonScheduleStore';
 import CreateScheduleModal from './CreateScheduleModal';
+import AttendanceModal from './AttendanceModal';
 import { useState } from 'react';
 
 type Props = {
@@ -14,6 +15,7 @@ type Props = {
 
 export default function ScheduleCard({ title, teacher_name, time, id, teacher_active, lesson_active}: Props) {
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
+  const [attendanceModalOpen, setAttendanceModalOpen] = useState<boolean>(false);
   const { deleteLessonSchedule } = useLessonScheduleStore();
 
   const storedUser = localStorage.getItem("user");
@@ -26,7 +28,7 @@ export default function ScheduleCard({ title, teacher_name, time, id, teacher_ac
       <p className='text-xs text-gray-500'>{time}</p>
 
         <button
-          onClick={() => setEditModalOpen(true)}
+          onClick={() => setAttendanceModalOpen(true)}
           className={`absolute top-2 ${user.is_adm ? 'right-14' : 'right-2'} text-gray-400 hover: hover:text-blue-600 hover:cursor-pointer opacity-0 group-hover:opacity-100 transition`}>
           <ClipboardIcon className='w-5 h-5' />
         </button>
@@ -47,6 +49,7 @@ export default function ScheduleCard({ title, teacher_name, time, id, teacher_ac
       
 
       {editModalOpen && <CreateScheduleModal open={editModalOpen} setOpen={setEditModalOpen} id={id} />}
+      {attendanceModalOpen && <AttendanceModal open={attendanceModalOpen} setOpen={setAttendanceModalOpen} lesson_id={id} />}
     </div>
   )
 }

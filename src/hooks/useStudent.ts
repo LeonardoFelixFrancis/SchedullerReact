@@ -1,4 +1,11 @@
-import { createStudentService, listStudentService, getStudentService, updateStudentService, addUStudentToLessonService, deleteStudentService } from "@/services/students";
+import { createStudentService, 
+         listStudentService, 
+         getStudentService, 
+         updateStudentService, 
+         addUStudentToLessonService, 
+         deleteStudentService,
+        listStudentsByLessonService
+     } from "@/services/students";
 import { toast } from "react-toastify";
 import type { StudentCreateData, StudentFilter, StudentUpdateData, StudentResponseData } from "@/models/student";
 import { useCallback, useState } from "react";
@@ -42,5 +49,10 @@ export default function useStudent () {
         return response.data;
     }
 
-    return {createStudent, getStudent, listStudent, deleteStudent, updateStudent, students}
+    const listStudentsByLesson = async (lesson_id: number) => {
+        const response = await listStudentsByLessonService(lesson_id);
+        return response.data;
+    }
+
+    return {createStudent, getStudent, listStudent, deleteStudent, updateStudent, listStudentsByLesson, students}
 }

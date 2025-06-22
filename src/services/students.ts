@@ -30,3 +30,8 @@ export const addUStudentToLessonService = async (student_id: number, lesson_id: 
     const response = await api.post(`/students/add_student_to_lesson/${student_id}/${lesson_id}`);
     return response;
 }
+
+export const listStudentsByLessonService = async (lesson_id: number) => {
+    const response = await api.get(`/students/get_lesson_students/${lesson_id}`);
+    return response;
+}
