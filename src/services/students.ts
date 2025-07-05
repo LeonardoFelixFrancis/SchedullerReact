@@ -1,5 +1,5 @@
 import api from './api';
-import type { StudentCreateData, StudentUpdateData, StudentFilter } from '@/models/student';
+import type { StudentCreateData, StudentUpdateData, StudentFilter, StudentAttendance } from '@/models/student';
 
 export const createStudentService = async (data: StudentCreateData) => {
     const response = await api.post('/students/', data);
@@ -33,5 +33,15 @@ export const addUStudentToLessonService = async (student_id: number, lesson_id: 
 
 export const listStudentsByLessonService = async (lesson_id: number) => {
     const response = await api.get(`/students/get_lesson_students/${lesson_id}`);
+    return response;
+}
+
+export const createStudentAttendanceService = async (data: StudentAttendance) => {
+    const response = await api.post('/students/create_student_attendance', data);
+    return response;
+}
+
+export const updateStudentAttendanceService = async (data: StudentAttendance) => {
+    const response = await api.put('/students/update_student_attendance', data);
     return response;
 }

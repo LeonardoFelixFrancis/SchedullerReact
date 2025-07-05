@@ -1,13 +1,15 @@
 import { createStudentService, 
          listStudentService, 
          getStudentService, 
-         updateStudentService, 
+         updateStudentService,
+         createStudentAttendanceService,
+         updateStudentAttendanceService, 
          addUStudentToLessonService, 
          deleteStudentService,
         listStudentsByLessonService
      } from "@/services/students";
 import { toast } from "react-toastify";
-import type { StudentCreateData, StudentFilter, StudentUpdateData, StudentResponseData } from "@/models/student";
+import type { StudentCreateData, StudentFilter, StudentUpdateData, StudentResponseData, StudentAttendance } from "@/models/student";
 import { useCallback, useState } from "react";
 
 export default function useStudent () {
@@ -54,5 +56,15 @@ export default function useStudent () {
         return response.data;
     }
 
-    return {createStudent, getStudent, listStudent, deleteStudent, updateStudent, listStudentsByLesson, students}
+    const createStudentAttendance = async (data: StudentAttendance) => {
+        const response = await createStudentAttendanceService(data);
+        return response.data;
+    }
+
+    const updateStudentAttendance = async (data: StudentAttendance) => {
+        const response = await updateStudentAttendanceService(data);
+        return response.data;
+    }
+
+    return {createStudent, getStudent, listStudent, deleteStudent, updateStudent, listStudentsByLesson, createStudentAttendance, updateStudentAttendance, students}
 }

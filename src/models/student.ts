@@ -17,3 +17,9 @@ export interface StudentFilter {
     name?: string;
     company_id?: number;
 }
+
+export interface StudentAttendance {
+    schedule_id: number;
+    student_id: number;
+    attended: boolean;
+}
